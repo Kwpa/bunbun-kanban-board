@@ -50,13 +50,66 @@ export default function Card({ card }) {
     return result.join("");
   }
 
+  function parseEndDate() {
+    const regex = /(#### End Date: .*)(\n|$)/g;
+    const string = card.message;
+    const result = string.match(regex);
+    if (result === null) return null;
+    return result.join("");
+  }
+
+  function parseStatus() {
+    const regex = /(#### Status: .*)(\n|$)/g;
+    const string = card.message;
+    const result = string.match(regex);
+    if (result === null) return null;
+    return result.join("");
+  }
+
+  function parseMultiple() {
+    let pEnd = parseEndDate();
+    let pSt = parseStatus();
+    if (pEnd != null && pSt != null)
+    {
+      let startingString = "#### [ ";
+      pEnd = pEnd.replace(/#/g, "");
+      pSt = pSt.replace(/#/g, "");
+      let re = startingString.concat(pEnd, " ] [ ", pSt, " ]");
+      re = re.replace(/(\r\n|\n|\r)/gm, "");
+      return re;
+    }
+    else
+    {
+      if (pEnd != null)
+      {
+        let startingString = "#### [ ";
+        pEnd = pEnd.replace(/#/g, "");
+        let re = startingString.concat(pEnd, " ]");
+        re = re.replace(/(\r\n|\n|\r)/gm, "");
+        return re;
+      }
+      else if (pSt != null)
+      {
+        let startingString = "#### [ ";
+        pSt = pSt.replace(/#/g, "");
+        let re = startingString.concat(pSt, " ]");
+        re = re.replace(/(\r\n|\n|\r)/gm, "");
+        return re;
+      } 
+      else
+      {
+        return null;
+      }
+    }
+  }
+
   const saveMessage = (msg) => {
     editCardMessage(card, msg);
     setIsEditable(false);
   };
 
   function toggleInputCheckbox(content, isTicked) {
-    let prevMessage = messageInput;
+    let prevMessage = card.message;
     const index = prevMessage.indexOf(content);
 
     if (index !== -1) {
@@ -83,7 +136,12 @@ export default function Card({ card }) {
       draggable={!isEditable}
       onDragStart={drag}
       onClick={(event) => {
-        if (isDetailOpen === false && !isEditable) setIsDetailOpen(true);
+        if (isDetailOpen === false && !isEditable) 
+          {
+            setMessageInput(card.message);
+
+            setIsDetailOpen(true);
+          }
       }}
       data-cardid={card.id}
     >
@@ -133,6 +191,8 @@ export default function Card({ card }) {
             setIsMenuOpen(true);
             getCoords();
             parseCheckboxes();
+            parseEndDate();
+            parseStatus();
           }}
         >
           <DotsThreeVertical size={18} />
@@ -158,6 +218,7 @@ export default function Card({ card }) {
                   <input
                     type="checkbox"
                     onChange={(e) => {
+                      const v = card.message;
                       const siblingContent =
                         (props.checked ? "- [x]" : "- [ ]") +
                         e.target.parentElement.textContent;
@@ -173,6 +234,25 @@ export default function Card({ card }) {
                 );
               },
             }}
+            className="h-full w-full p-2 pt-0 text-white pointer-events-none"
+          />
+        </>
+      ) : null}
+      {parseMultiple() ? (
+        <>
+          <hr className="border border-gray-700 my-2 pointer-events-none" />
+          <ReactMarkdown
+            children={
+              parseMultiple()
+            }
+            // remarkPlugins={[remarkGfm]}
+            // components={{
+            //   input: ({ node, ...props }) => {
+            //     return (
+            //       <p>node</p>
+            //     );
+            //   },
+            // }}
             className="h-full w-full p-2 pt-0 text-white pointer-events-none"
           />
         </>

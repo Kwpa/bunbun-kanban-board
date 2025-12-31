@@ -57,9 +57,9 @@ function App() {
           <h1 className="relative w-fit m-5 mb-10 px-32 pb-2 text-white font-bold text-5xl bg-gradient-to-b from-transparent from-50% to-violet-500/50 to-50%">
             <img
               className="absolute h-24 z-10 left-3 -top-4 pointer-events-none"
-              src="/logo.svg"
+              src="/logo2.svg"
             />
-            {"Bunbun Board"}
+            {"KaiKai Board"}
           </h1>
         </div>
 

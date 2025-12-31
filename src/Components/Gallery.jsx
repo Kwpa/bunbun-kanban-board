@@ -120,7 +120,7 @@ export default function Gallery({ card }) {
       <div className="flex">
         <label
           id="image-upload"
-          className="flex flex-row justify-center items-center m-3 mb-0 text-white font-semibold hover:text-violet-400 hover:cursor-pointer"
+          className="flex flex-row justify-center items-center m-3 mb-0 text-white text-sm font-semibold hover:text-violet-400 hover:cursor-pointer"
         >
           <input
             type="file"
@@ -136,7 +136,7 @@ export default function Gallery({ card }) {
         </label>
         {!navigator.userAgent.includes("Firefox") ? (
           <button
-            className="flex flex-row justify-center items-center m-3 mb-0 text-white font-semibold hover:text-violet-400"
+            className="flex flex-row justify-center items-center m-3 mb-0 text-white text-sm font-semibold hover:text-violet-400"
             onClick={() => {
               pasteImageBitmap();
             }}
@@ -144,7 +144,7 @@ export default function Gallery({ card }) {
             <Images size={30} className="mr-2" /> Paste
           </button>
         ) : (
-          <button className="group flex flex-row justify-center items-center m-3 mb-0 text-white brightness-50 font-semibold hover:text-red-400">
+          <button className="group flex flex-row justify-center items-center text-sm m-3 mb-0 text-white brightness-50 font-semibold hover:text-red-400">
             <Images size={30} className="mr-2 group-hover:hidden" />
             <HeartBreak size={30} className="mr-2 hidden group-hover:block" />
             <p className="group-hover:hidden">Paste</p>

@@ -5,6 +5,7 @@ import {
   NotePencil,
   XCircle,
   FileText,
+  CheckSquareOffset,
 } from "@phosphor-icons/react";
 import ReactDom from "react-dom";
 import { useGlobalContext } from "../GlobalContext";
@@ -53,24 +54,26 @@ export default function CardDetail({ isOpen, close, card }) {
     <>
       <div className="absolute top-0 left-0 h-screen w-screen flex items-center justify-center ">
         <div
-          className="fixed top-0 left-0 z-10 w-full h-full bg-black/60 fade-in"
+          // background when open?
+          className="fixed top-0 left-0 z-10 w-full h-full bg-black/80 fade-in"
           onClick={() => {
             close();
             setIsEditable(false);
             setMessageInput(card.message);
           }}
         />
-        <div className="flex items-center justify-center flex-col z-20 p-5 h-full md:h-3/4 w-full md:w-3/4 md:rounded-lg bg-gray-800 shadow-lg fade-in ">
+        <div className="flex items-center justify-center flex-col z-20 p-5 h-full md:h-3/4 w-full md:w-1/2 md:rounded-lg bg-gray-900 shadow-lg fade-in ">
           {!isEditable ? (
+            //modal open
             <>
               <div className="w-full flex flex-row justify-end">
-                <button
+                <button // edit pencil
                   className="mr-2 text-white hover:text-violet-400"
                   onClick={() => setIsEditable(true)}
                 >
                   <NotePencil size={30} />
                 </button>
-                <button
+                <button // close modal
                   className="text-white hover:text-violet-400 "
                   onClick={() => close()}
                 >
@@ -78,7 +81,7 @@ export default function CardDetail({ isOpen, close, card }) {
                 </button>
               </div>
 
-              <h1 className=" mx-5 mb-8 px-3 pb-2 text-center text-white font-bold break-words text-5xl bg-gradient-to-b from-transparent from-50% to-violet-500/50 to-50%">
+              <h1 className=" mx-5 mb-8 px-3 pb-2 text-center text-white font-bold break-words text-2xl bg-gradient-to-b from-transparent from-50% to-violet-500/50 to-50%">
                 {card.title}
               </h1>
 
@@ -122,6 +125,14 @@ export default function CardDetail({ isOpen, close, card }) {
                 </a>
                 <button
                   onClick={() => {
+                    setMessageInput(card.message);
+                  }}
+                  className="text-white hover:text-teal-500 p-2"
+                >
+                  <CheckSquareOffset size={30} />
+                </button>
+                <button
+                  onClick={() => {
                     setIsEditable(false);
                     setMessageInput(card.message);
                     setTitleInput(card.title);
@@ -151,7 +162,7 @@ export default function CardDetail({ isOpen, close, card }) {
                 </button>
               </div>
 
-              <h1 className=" mx-5 mb-8 px-3 pb-2 text-center text-white font-bold text-5xl bg-gradient-to-b from-transparent from-50% to-violet-500/50 to-50%">
+              <h1 className=" mx-5 mb-8 px-3 pb-2 text-center text-white font-bold text-2xl bg-gradient-to-b from-transparent from-50% to-violet-500/50 to-50%">
                 {card.title}
               </h1>
 
