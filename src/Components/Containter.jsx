@@ -66,7 +66,8 @@ export default function Container({ container }) {
   const allowDrop = (event) => {
     event.preventDefault();
   };
-
+  const ApeSqueak = new Audio("./sounds/ape_squeak.mp3");
+    
   return (
     <div
       ref={parent}
@@ -126,7 +127,7 @@ export default function Container({ container }) {
       <div className="w-full h-7 my-2 flex items-center justify-center pointer-events-none">
         <button
           className="flex items-center justify-center h-8 w-8 text-white rounded-md hover:bg-violet-500 transition-all duration-100 pointer-events-auto"
-          onClick={() => addCard(container.id)}
+          onClick={() => {addCard(container.id); ApeSqueak.play()}}
         >
           <PlusCircle size={20} />
         </button>

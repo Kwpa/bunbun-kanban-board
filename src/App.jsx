@@ -6,6 +6,7 @@ import Settings from "./Modals/Settings";
 import { useState } from "react";
 
 function App() {
+  
   const { containers, addContainer } = useGlobalContext();
   const [parent] = useAutoAnimate();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
@@ -30,6 +31,12 @@ function App() {
       setCoords(buttonRect);
     }
   };
+
+  window.onload = () => {
+    const BackgroundAudio = new Audio("./sounds/ape_spa.mp3");
+    BackgroundAudio.loop=true;
+    BackgroundAudio.play();
+  }
 
   return (
     <>
