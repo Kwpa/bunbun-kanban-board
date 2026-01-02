@@ -1,11 +1,14 @@
-import { DownloadSimple, GithubLogo, Export } from "@phosphor-icons/react";
+import { DownloadSimple, GithubLogo, Export, Textbox } from "@phosphor-icons/react";
 import React from "react";
 import ReactDom from "react-dom";
 import { useGlobalContext } from "../GlobalContext";
+import { useState } from "react";
+import JSONViewer from "../Modals/JSONViewer";
 
 export default function Settings({ close, isOpen, coords }) {
   const { loadData } = useGlobalContext();
-
+  const [isJSONViewerOpen, setJSONViewerOpen] = useState(false);
+  
   function exportData() {
     const data = localStorage.getItem("userData");
     const date = new Date();
@@ -51,15 +54,25 @@ export default function Settings({ close, isOpen, coords }) {
         className="absolute flex items-center justify-center flex-col z-20 p-2 rounded-md bg-gray-775 shadow-md fade-in"
         style={{ left: coords.x - 70, top: coords.y + 43 }}
       >
+        <button
+          className="flex items-center p-1 m-1 w-full text-white hover:bg-gray-700 rounded-md hover:text-violet-400 transition-all duration-100"
+          onClick={(event) => {
+            event.stopPropagation();
+            setJSONViewerOpen(true);
+          }}
+        >
+          <Textbox size={23} className="pr-1" />
+          JSON
+        </button>
         <label
           id="file-upload"
           className="flex items-center p-1 m-1 w-full text-white hover:bg-gray-700 rounded-md hover:text-violet-400 transition-all duration-100 hover:cursor-pointer"
         >
-          <input type="file" accept=".txt" onChange={(e) => importData(e)} />
+        <input type="file" accept=".txt" onChange={(e) => importData(e)} />
           <DownloadSimple size={23} className="pr-1" />
           Import
         </label>
-
+        
         <button
           className="flex items-center p-1 m-1 w-full text-white hover:bg-gray-700 rounded-md hover:text-violet-400 transition-all duration-100"
           onClick={() => {
@@ -78,6 +91,11 @@ export default function Settings({ close, isOpen, coords }) {
           <GithubLogo size={23} className="pr-1" />
           Github
         </a>
+        <JSONViewer
+                  isOpen={isJSONViewerOpen}
+                  close={() => setJSONViewerOpen(false)}
+                  coords={coords}
+                />
       </div>
     </>,
     document.getElementById("portal")

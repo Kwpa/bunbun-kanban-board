@@ -58,7 +58,7 @@ export default function JSONViewer({ isOpen, close }) {
           <div className="w-full flex flex-row justify-end">
             <button // load data
               className="text-white hover:text-green-400 "
-              onClick={() => stageData(dataValue) }
+              onClick={() => stageData(dataInput) }
             >
               <FileArrowUp size={30} />
             </button>
@@ -72,7 +72,7 @@ export default function JSONViewer({ isOpen, close }) {
           
 
           <h1 className=" mx-5 mb-8 px-3 pb-2 text-center text-white font-bold break-words text-2xl bg-gradient-to-b from-transparent from-50% to-violet-500/50 to-50%">
-            Hello
+            View, edit and upload JSON
           </h1>
         <>
         <textarea
@@ -82,7 +82,6 @@ export default function JSONViewer({ isOpen, close }) {
                 onChange={(e) => setDataInput(e.target.value)}
                 value={dataInput}
                 autoFocus
-
               />
         </>
         </div>
