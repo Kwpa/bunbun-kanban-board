@@ -53,7 +53,7 @@ export default function JSONViewer({ isOpen, close }) {
             close();
           }}
         />
-        <div className="flex items-center justify-center flex-col z-20 p-5 h-full md:h-3/4 w-full md:w-1/2 md:rounded-lg bg-gray-900 shadow-lg fade-in ">
+        <div className="fixed flex items-center justify-center flex-col z-20 p-5 h-full md:h-3/4 w-full md:w-1/2 md:rounded-lg bg-gray-900 shadow-lg fade-in ">
           
           <div className="w-full flex flex-row justify-end">
             <button // load data

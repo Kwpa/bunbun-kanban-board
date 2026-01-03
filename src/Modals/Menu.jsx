@@ -34,7 +34,7 @@ export default function Menu({
         }}
       />
       <div
-        className="absolute flex items-center justify-center flex-col z-20 p-1 rounded-md bg-gray-775 shadow-md fade-in"
+        className="fixed flex items-center justify-center flex-col z-20 p-1 rounded-md bg-gray-775 shadow-md fade-in"
         style={{ left: coords.x - 95, top: coords.y }}
       >
         {type === TYPES.CONTAINER ? (

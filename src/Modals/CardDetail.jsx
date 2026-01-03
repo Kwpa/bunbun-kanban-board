@@ -52,7 +52,7 @@ export default function CardDetail({ isOpen, close, card }) {
   if (!isOpen) return null;
   return ReactDom.createPortal(
     <>
-      <div className="absolute top-0 left-0 h-screen w-screen flex items-center justify-center ">
+      <div className="fixed top-0 left-0 h-screen w-screen flex items-center justify-center ">
         <div
           // background when open?
           className="fixed top-0 left-0 z-10 w-full h-full bg-black/80 fade-in"
