@@ -3,6 +3,8 @@ import {
   DotsSixVertical,
   DotsThreeVertical,
   PlusCircle,
+  CaretDown,
+  CaretUp, 
 } from "@phosphor-icons/react";
 import { useGlobalContext } from "../GlobalContext";
 import Menu from "../Modals/Menu";
@@ -17,6 +19,7 @@ export default function Container({ container }) {
     if (container.title === "") return true;
     else return false;
   });
+  const [isHidden, setIsHidden] = useState(false);
   const { addCard, addCardTop, editContainerTitle, deleteContainer, moveCard } =
     useGlobalContext();
   const [coords, setCoords] = useState(null);
@@ -104,6 +107,22 @@ export default function Container({ container }) {
           id={container.id}
           className="p-1 justify-self-end text-white hover:bg-gray-700 rounded-md hover:text-violet-400 transition-all duration-100 pointer-events-auto"
           onClick={() => {
+            if (isHidden)
+            {
+              setIsHidden(false);
+            }
+            else
+            {
+              setIsHidden(true);
+            }
+          }}
+        >
+          { isHidden ? (<CaretDown size={20} />) : (<CaretUp size={20} />)}
+        </button>
+        <button
+          id={container.id}
+          className="p-1 justify-self-end text-white hover:bg-gray-700 rounded-md hover:text-violet-400 transition-all duration-100 pointer-events-auto"
+          onClick={() => {
             setIsMenuOpen(true);
             getCoords();
           }}
@@ -119,7 +138,8 @@ export default function Container({ container }) {
           setIsEditable={setIsEditable}
         />
       </div>
-      <div className="w-full h-7 my-2 flex items-center justify-center pointer-events-none">
+      <div>
+        {isHidden ? (<></>) : (<div><div className="w-full h-7 my-2 flex items-center justify-center pointer-events-none">
         <button
           className="flex items-center justify-center h-8 w-8 text-white rounded-md hover:bg-violet-500 transition-all duration-100 pointer-events-auto"
           onClick={() => {addCardTop(container.id); ApeSqueak.play()}}
@@ -127,9 +147,9 @@ export default function Container({ container }) {
           <PlusCircle size={20} />
         </button>
       </div>
-      {container.cards.map((card) => (
+      <div>{container.cards.map((card) => (
         <Card key={card.id} card={card} />
-      ))}
+      ))}</div>
 
       <div className="w-full h-7 my-2 flex items-center justify-center pointer-events-none">
         <button
@@ -139,6 +159,9 @@ export default function Container({ container }) {
           <PlusCircle size={20} />
         </button>
       </div>
+      </div>)}
+      </div>
+      
     </div>
   );
 }
