@@ -79,6 +79,24 @@ export const GlobalContextProvider = ({ children }) => {
     setContainers(prevContainers);
   }
 
+  function addCardTop(containerId) {
+    const prevContainers = [...containers];
+    const containerIndex = prevContainers.findIndex(
+      (container) => container.id === containerId
+    );
+
+    if (containerIndex >= 0) {
+      prevContainers[containerIndex] = {
+        ...prevContainers[containerIndex],
+        cards: [
+          new CardClass("", "", containerId, [], COLORS.DEFAULT),
+          ...prevContainers[containerIndex].cards,
+        ],
+      };
+    }
+    setContainers(prevContainers);
+  }
+
   function deleteCard(card) {
     const prevContainers = [...containers];
     const containerIndex = prevContainers.findIndex(
@@ -289,6 +307,7 @@ export const GlobalContextProvider = ({ children }) => {
       value={{
         containers,
         addCard,
+        addCardTop,
         addContainer,
         deleteContainer,
         deleteCard,

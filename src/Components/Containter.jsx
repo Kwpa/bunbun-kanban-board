@@ -17,7 +17,7 @@ export default function Container({ container }) {
     if (container.title === "") return true;
     else return false;
   });
-  const { addCard, editContainerTitle, deleteContainer, moveCard } =
+  const { addCard, addCardTop, editContainerTitle, deleteContainer, moveCard } =
     useGlobalContext();
   const [coords, setCoords] = useState(null);
   const [parent] = useAutoAnimate();
@@ -119,7 +119,14 @@ export default function Container({ container }) {
           setIsEditable={setIsEditable}
         />
       </div>
-
+      <div className="w-full h-7 my-2 flex items-center justify-center pointer-events-none">
+        <button
+          className="flex items-center justify-center h-8 w-8 text-white rounded-md hover:bg-violet-500 transition-all duration-100 pointer-events-auto"
+          onClick={() => {addCardTop(container.id); ApeSqueak.play()}}
+        >
+          <PlusCircle size={20} />
+        </button>
+      </div>
       {container.cards.map((card) => (
         <Card key={card.id} card={card} />
       ))}
