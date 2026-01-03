@@ -127,7 +127,7 @@ export default function Card({ card }) {
   return (
     <div
       className={
-        `Card flex flex-col hover:cursor-pointer bg-gray-800 hover:text-violet-400 h-auto rounded-md p-2 mb-4 border-t border-t-blue-200 border-opacity-10 shadow-md transition-transform ` +
+        `draggable-card Card flex flex-col hover:cursor-pointer bg-gray-800 hover:text-violet-400 h-auto rounded-md p-2 mb-4 border-t border-t-blue-200 border-opacity-10 shadow-md transition-transform ` +
         card.color
       }
       // style={{
