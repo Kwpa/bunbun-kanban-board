@@ -116,6 +116,58 @@ export const GlobalContextProvider = ({ children }) => {
     }
   }
 
+  function gup(cardId)
+  {
+    const prevContainers = [...containers];
+    const card = getCardById(cardId);
+    const oldContainerIndex = prevContainers.findIndex(
+      (container) => container.id === card.containerId
+    );
+    if (oldContainerIndex !== -1)
+    {
+      const currentCardIndex = prevContainers[oldContainerIndex].cards.findIndex((card) => card.id === cardId);
+      const nextCardIndex = currentCardIndex - 1;
+      if (nextCardIndex >= 0)
+      {
+       return nextCardIndex;
+      }
+      else
+      {
+        return -1;
+      }
+    }
+    else
+    {
+      return -1;
+    }
+  }
+
+  function gdown(cardId)
+  {
+    const prevContainers = [...containers];
+    const card = getCardById(cardId);
+    const oldContainerIndex = prevContainers.findIndex(
+      (container) => container.id === card.containerId
+    );
+    if (oldContainerIndex !== -1)
+    {
+      const currentCardIndex = prevContainers[oldContainerIndex].cards.findIndex((card) => card.id === cardId);
+      const nextCardIndex = currentCardIndex + 1;
+      if (nextCardIndex < prevContainers[oldContainerIndex].cards.length)
+      {
+        return nextCardIndex;
+      }
+      else
+      {
+        return -1;
+      }
+    }
+    else
+    {
+      return -1;
+    }
+  }
+
   function moveCard(cardId, newContainer, cardBelowId) {
     const card = getCardById(cardId);
     const prevContainers = [...containers];
@@ -173,6 +225,39 @@ export const GlobalContextProvider = ({ children }) => {
       };
     }
     setContainers(prevContainers);
+  }
+
+const swapElements = (array, index1, index2) => {
+    if (index1 > index2)
+    {
+      array[index1] = array.splice(index2, 1, array[index1])[0];
+    }
+};
+
+  function moveCardSameContainer(cardId, nextCardIndex) {
+    const containerId = getCardById(cardId).containerId;
+    const prevContainers = [...containers];
+    const containerIndex = prevContainers.findIndex(
+      (container) => container.id === containerId
+    );
+    
+    if (containerIndex !== -1) {
+      const cardIndex = prevContainers[containerIndex].cards.findIndex(
+        (card) => card.id === cardId
+      );
+      if (nextCardIndex !== -1 && cardIndex !== -1) {
+        
+        if (cardIndex > nextCardIndex)
+        {  
+          swapElements(prevContainers[containerIndex].cards, cardIndex, nextCardIndex);
+        }
+        else
+        {
+          swapElements(prevContainers[containerIndex].cards, nextCardIndex, cardIndex);
+        }
+        setContainers(prevContainers);
+        }
+      }
   }
 
   function moveContainer(container, direction) {
@@ -320,6 +405,9 @@ export const GlobalContextProvider = ({ children }) => {
         moveContainer,
         editCardColor,
         loadData,
+        gup,
+        gdown,
+        moveCardSameContainer,
       }}
     >
       {children}

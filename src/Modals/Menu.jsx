@@ -5,6 +5,8 @@ import {
   ArrowFatLineLeft,
   ArrowFatLineRight,
   PaintBucket,
+  ArrowFatLineUp,
+  ArrowFatLineDown,
 } from "@phosphor-icons/react";
 import ReactDom from "react-dom";
 import { useGlobalContext } from "../GlobalContext";
@@ -20,7 +22,7 @@ export default function Menu({
   object,
   setIsEditable,
 }) {
-  const { deleteContainer, deleteCard, moveContainer, editCardColor } =
+  const { deleteContainer, deleteCard, moveContainer, editCardColor, moveCard, gup, gdown, moveCardSameContainer } =
     useGlobalContext();
 
   if (!isOpen) return null;
@@ -62,6 +64,36 @@ export default function Menu({
           </div>
         ) : (
           <div>
+            <div>
+              <button
+              className={
+                "p-1 hover:bg-gray-700 rounded-md transition-all duration-100 " +
+                COLORS.DEFAULT
+              }
+              onClick={(event) => {
+                event.stopPropagation();
+                const cardBelowIndex = gdown(object.id);
+                moveCardSameContainer(object.id, cardBelowIndex);
+                
+              }}
+            >
+              <ArrowFatLineDown />
+            </button>
+            <button
+              className={
+                "p-1 m-1 hover:bg-gray-700 rounded-md transition-all duration-100 " +
+                COLORS.DEFAULT
+              }
+              onClick={(event) => {
+                event.stopPropagation();
+                const cardBelowIndex = gup(object.id);
+                moveCardSameContainer(object.id, cardBelowIndex);
+                
+              }}
+            >
+              <ArrowFatLineUp />
+            </button>
+            </div>
             <button
               className={
                 "p-1 hover:bg-gray-700 rounded-md transition-all duration-100 " +
