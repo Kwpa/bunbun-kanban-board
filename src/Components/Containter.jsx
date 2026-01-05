@@ -5,6 +5,7 @@ import {
   PlusCircle,
   CaretDown,
   CaretUp, 
+  Checks,
 } from "@phosphor-icons/react";
 import { useGlobalContext } from "../GlobalContext";
 import Menu from "../Modals/Menu";
@@ -20,6 +21,7 @@ export default function Container({ container }) {
     else return false;
   });
   const [isHidden, setIsHidden] = useState(false);
+  const [hideDone, setHideDone] = useState(false);
   const { addCard, addCardTop, editContainerTitle, deleteContainer, moveCard } =
     useGlobalContext();
   const [coords, setCoords] = useState(null);
@@ -70,7 +72,23 @@ export default function Container({ container }) {
     event.preventDefault();
   };
   const ApeSqueak = new Audio("./sounds/ape_squeak.mp3");
-    
+  
+  function parseStatusComplete(card) {
+    const regex = /(#### Status: Complete.*)(\n|$)/g;
+    const string = card.message;
+    const result = string.match(regex);
+    if (result === null) return null;
+    return result.join("");
+  }
+
+  function getUncompletedCards()
+  {
+    return container.cards.filter( card =>
+      
+      parseStatusComplete(card) == null
+    )
+  }
+
   return (
     <div
       ref={parent}
@@ -103,6 +121,22 @@ export default function Container({ container }) {
         ) : (
           <p className="w-full text-white font-bold">{container.title}</p>
         )}
+        <button
+          id={container.id}
+          className="p-1 justify-self-end text-white hover:bg-gray-700 rounded-md hover:text-violet-400 transition-all duration-100 pointer-events-auto"
+          onClick={() => {
+            if (hideDone)
+            {
+              setHideDone(false);
+            }
+            else
+            {
+              setHideDone(true);
+            }
+          }}
+        >
+          { hideDone ? (<Checks weight="fill" size={20} />) : (<Checks size={20} />)}
+        </button>
         <button
           id={container.id}
           className="p-1 justify-self-end text-white hover:bg-gray-700 rounded-md hover:text-violet-400 transition-all duration-100 pointer-events-auto"
@@ -147,9 +181,17 @@ export default function Container({ container }) {
           <PlusCircle size={20} />
         </button>
       </div>
-      <div>{container.cards.map((card) => (
-        <Card key={card.id} card={card} />
-      ))}</div>
+      <div>{
+        hideDone ? (        
+          getUncompletedCards().map((card) => (
+          <Card key={card.id} card={card} />
+          ))
+        ) : (
+          container.cards.map((card) => (
+          <Card key={card.id} card={card} />
+          ))
+        )
+        }</div>
 
       <div className="w-full h-7 my-2 flex items-center justify-center pointer-events-none">
         <button

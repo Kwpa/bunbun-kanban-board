@@ -66,6 +66,14 @@ export default function Card({ card }) {
     return result.join("");
   }
 
+  function parseStatusComplete() {
+    const regex = /(#### Status: Complete.*)(\n|$)/g;
+    const string = card.message;
+    const result = string.match(regex);
+    if (result === null) return null;
+    return result.join("");
+  }
+
   function parseMultiple() {
     let pEnd = parseEndDate();
     let pSt = parseStatus();
