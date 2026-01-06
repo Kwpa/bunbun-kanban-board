@@ -12,6 +12,7 @@
   "dependencies": {
     "@formkit/auto-animate": "^0.7.0",
     "@phosphor-icons/react": "^2.0.10",
+    "argon2": "^0.44.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-markdown": "^8.0.7",
